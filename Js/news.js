@@ -4,6 +4,7 @@ const loadAllCategory = async () =>{
     return data.data.news_category;
 }
 const displayCategory = async () =>{
+
     const data = await loadAllCategory();
     const menuContainer = document.getElementById('menu-items')
 
@@ -24,6 +25,8 @@ const displayCategory = async () =>{
    
 }
 loadNewsItem = (news) =>{
+  toggleSpinner (true);
+
     fetch(`https://openapi.programming-hero.com/api/news/category/${news}`)
     .then(res => res.json())
     .then(data => displayNewsItems(data.data))
@@ -60,8 +63,9 @@ displayNewsItems = allNews => {
     `
 newsContainer.appendChild(div)
 // ${news.author.img}
-
 })
+toggleSpinner (false);
+
 }
 
 const modalOpen =(image_url, name, details, title) =>{
@@ -74,25 +78,18 @@ const modalOpen =(image_url, name, details, title) =>{
   <p>${details.length > 300 ? details.slice(0, 250) + '...' : details}</p>
  `
 }
-// // modalOpen = () =>{
-//   const div =  document.createElement('div')
-//   div.innerHTML = `
-//   a href="#my-modal-2" class="btn">open modal</a>
-//   <!-- Put this part before </body> tag -->
-//   <div class="modal" id="my-modal-2">
-//     <div class="modal-box">
-//       <h3 class="font-bold text-lg">Congratulations random Internet user!</h3>
-//       <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
-//       <div class="modal-action">
-//        <a href="#" class="btn">Yay!</a>
-//       </div>
-//     </div>
-//   </div>
-//   `
+const toggleSpinner = loading =>{
+  const loadSpiner = document.getElementById('loader')
 
-// }
-// modalOpen()
+  if(loading){
+    loadSpiner.classList.remove('hidden')
+  }
+  else{
+    loadSpiner.classList.add('hidden')
+  }
+}
+
 displayCategory()
 
-// onclick="modalOpen('${details}'),'${image_url}' "
+
 
