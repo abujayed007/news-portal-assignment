@@ -15,7 +15,7 @@ const displayCategory = async () =>{
         const div = document.createElement('div')
         div.classList.add('col');
         div.innerHTML =`
-        <button onclick="loadNewsItem('${category_id}')" class="btn bg-gray-200 mt-4 font-extrabold hover:bg-purple-300 border-none text-purple-900 ">${category_name}</button>
+        <button onclick="loadNewsItem('${category_id}')" class="btn bg-gray-200 mt-4  font-extrabold hover:bg-purple-300 border-none text-purple-900 ">${category_name}</button>
     
         `
         menuContainer.appendChild(div)
@@ -40,13 +40,13 @@ displayNewsItems = allNews => {
     // console.log(allNews)
     
     allNews.filter(news =>{
-      const {details , image_url, title , author, total_view, rating} = news;
+      const {details , image_url, title , author, total_view, rating, _id} = news;
       const {name, img } = author;
       const {number , badge} = rating;
-      console.log(news)
+      // console.log(news)
       const div = document.createElement('div')
     div.innerHTML= `
-    <div class="card lg:card-side bg-base-100 mt-5 shadow-xl">
+    <div class="card  lg:card-side bg-base-100 mt-5 shadow-xl">
     <figure><img class="w-96 h-100 " src="${image_url}" alt="Album"></figure>
     <div class="card-body  w-75">
     <h2 class="card-title p-2">${title}</h2>
@@ -56,7 +56,7 @@ displayNewsItems = allNews => {
       <img class="w-22 h-12 rounded-full p-2" src="${img}" alt="Album">
       <p class="pt-2 font-bold">${name ? name : 'No Name'}</p>
       <p class="pt-2 font-bold"><i class="fa-solid fa-eye"></i> ${total_view ? total_view : 'No View' }</p>
-      <label for="my-modal-3"  onclick="modalOpen ('${image_url}','${name}', '${details}',  '${title}')" class="btn btn-primary modal-button">See More</label>
+      <label for="my-modal-3"  onclick="modalOpen('${_id}')" class="btn btn-primary modal-button">See More</label>
       </div>
     </div>
   </div>
@@ -68,15 +68,28 @@ toggleSpinner (false);
 
 }
 
-const modalOpen =(image_url, name, details, title) =>{
- const modalDiv = document.getElementById('modal-body')
- modalDiv.textContent = '';
- modalDiv.innerHTML = `
- <img src="${image_url}">
-  <h1 class="text-2xl font-bold">${name ? name : 'No Name'}</h1>
-  <h2 class="text-2xl">${title}</h2>
-  <p>${details.length > 300 ? details.slice(0, 250) + '...' : details}</p>
- `
+const modalOpen =modalDetails =>{
+  fetch(`https://openapi.programming-hero.com/api/news/${modalDetails}`)
+  .then(res => res.json())
+  .then(data => displayModal(data.data))
+
+}
+
+const displayModal = (data) =>{
+console.log(data)
+const modalBody = document.getElementById('modal-body')
+modalBody.textContent = '';
+data.forEach(modalData =>{
+const modalDiv = document.createElement('div')
+modalDiv.innerHTML = `
+<img src="${modalData.author.img}">
+<h3 class="text-2xl font-extrabold">Name: ${modalData.author.name ? modalData.author.name : 'No Name'}</h3>
+<h3 class="text-2xl font-bold">Title: ${modalData.title}</h3>
+<h3 class="text-xl font-semibold">Published Date: ${modalData.author.published_date}</h3>
+<h3>${modalData.details.slice(0, 150)}...</h3>
+`
+modalBody.appendChild(modalDiv)
+})
 }
 const toggleSpinner = loading =>{
   const loadSpiner = document.getElementById('loader')
