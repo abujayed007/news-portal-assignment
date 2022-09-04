@@ -15,36 +15,33 @@
 <body>
 
    <section>
-    
+    <!-- NavBar start -->
     <div class="navbar bg-base-100 sm:d-block-inline">
       <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl text-pink-600 text-4xl mr-28">World News</a>
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal p-0 ">
-          <li><a class="font-2xl">HOME</a></li>
+          <li><a  href="index.html" class="btn text-white bg">HOME</a></li>
           <li tabindex="0">
-            <a>
-              QUESTION
-              <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
-            </a>
-            <ul class="p-2 bg-base-100">
-              <li><a>Answer 2</a></li>
-              <li><a>Answer 2</a></li>
-              <li><a>Answer 1</a></li>
-            </ul>
+            <a href="answer.html"  class="btn text-white bg">Answer</a>
           </li>
-          <li><a>TREND</a></li>
+          <li><a  class="btn text-white bg">TREND</a></li>
         </ul>
       </div>
     </div>
 
    </section>
+   <!-- Navbar End  -->
+   <!-- Category Items Start  -->
    <section>
     <div id="menu-items" style="height: 80px;" class="flex justify-evenly mt-5 bg-gray-200 text-center ">
 
     </div>
   </section>
+   <!-- Category Items End  -->
+
+   <!-- Spinner Start  -->
   <section>
     <div id="loader" class="text-center mt-12 hidden">
       <div role="status">
@@ -56,6 +53,7 @@
       </div>
   </div>
   </section>
+  <!-- spinner end  -->
 
         <div id="news-container">
 
@@ -64,7 +62,7 @@
       
 
 <section>
-  <!-- Modal  -->
+  <!-- Modal Start  -->
 <input type="checkbox" id="my-modal-3" class="modal-toggle" />
 <div class="modal">
   <div class="modal-box relative">
@@ -74,8 +72,9 @@
     </div>
   </div>
 </div>
-
-</section>  
+</section> 
+<!-- Modal End   -->
+<!-- Javascript Link  -->
 <script src="./Js/news.js"></script>
 </body>
 </html>

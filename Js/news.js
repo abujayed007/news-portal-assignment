@@ -76,7 +76,7 @@ const modalOpen =modalDetails =>{
 }
 
 const displayModal = (data) =>{
-console.log(data)
+// console.log(data)
 const modalBody = document.getElementById('modal-body')
 modalBody.textContent = '';
 data.forEach(modalData =>{
