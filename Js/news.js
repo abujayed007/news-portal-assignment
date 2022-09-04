@@ -24,32 +24,36 @@ const displayCategory = async () =>{
    
 }
 loadNewsItem = (news) =>{
-    // console.log(news)
     fetch(`https://openapi.programming-hero.com/api/news/category/${news}`)
     .then(res => res.json())
     .then(data => displayNewsItems(data.data))
+    .catch(error => console.log(error))
 }
 displayNewsItems = allNews => {
 
   const newsContainer = document.getElementById('news-container');
   newsContainer.textContent = '';
 
-    console.log(allNews)
+    // console.log(allNews)
     
     allNews.filter(news =>{
-      console.log(allNews)
+      const {details , image_url, title , author, total_view, rating} = news;
+      const {name, img } = author;
+      const {number , badge} = rating;
+      console.log(news)
       const div = document.createElement('div')
     div.innerHTML= `
     <div class="card lg:card-side bg-base-100 mt-5 shadow-xl">
-    <figure><img class="w-96 h-100 " src="${news.image_url}" alt="Album"></figure>
+    <figure><img class="w-96 h-100 " src="${image_url}" alt="Album"></figure>
     <div class="card-body  w-75">
-    <h2 class="card-title p-2">${news.title}</h2>
-      <p class="disable p-2">${news.details.slice(0, 200)}...</p>
+    <h2 class="card-title p-2">${title}</h2>
+     
       <div class="card-actions justify-end">
-      <img class="w-22 h-12 rounded-full p-2" src="${news.author.img}" alt="Album">
-      <p class="pt-2 font-bold">${news.author.name ? news.author.name : 'No Names'}</p>
-      <p class="pt-2 font-bold">${news.total_view}</p>
-        <button class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i></button>
+      <p class="p-2">${details.length > 400 ? details.slice(0, 400) + '...' :details}</p>
+      <img class="w-22 h-12 rounded-full p-2" src="${img}" alt="Album">
+      <p class="pt-2 font-bold">${name ? name : 'No Name'}</p>
+      <p class="pt-2 font-bold"><i class="fa-solid fa-eye"></i> ${total_view ? total_view : 'No View' }</p>
+      <label for="my-modal-3"  onclick="modalOpen ('${image_url}','${name}', '${details}',  '${title}')" class="btn btn-primary modal-button">See More</label>
       </div>
     </div>
   </div>
@@ -59,48 +63,36 @@ newsContainer.appendChild(div)
 
 })
 }
+
+const modalOpen =(image_url, name, details, title) =>{
+ const modalDiv = document.getElementById('modal-body')
+ modalDiv.textContent = '';
+ modalDiv.innerHTML = `
+ <img src="${image_url}">
+  <h1 class="text-2xl font-bold">${name ? name : 'No Name'}</h1>
+  <h2 class="text-2xl">${title}</h2>
+  <p>${details.length > 300 ? details.slice(0, 250) + '...' : details}</p>
+ `
+}
+// // modalOpen = () =>{
+//   const div =  document.createElement('div')
+//   div.innerHTML = `
+//   a href="#my-modal-2" class="btn">open modal</a>
+//   <!-- Put this part before </body> tag -->
+//   <div class="modal" id="my-modal-2">
+//     <div class="modal-box">
+//       <h3 class="font-bold text-lg">Congratulations random Internet user!</h3>
+//       <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
+//       <div class="modal-action">
+//        <a href="#" class="btn">Yay!</a>
+//       </div>
+//     </div>
+//   </div>
+//   `
+
+// }
+// modalOpen()
 displayCategory()
 
-// // const displayNewsItem = news =>{
-// //     fetch(`https://openapi.programming-hero.com/api/news/category/0${category_id}`)
-// //     .then(res => res.json())
-// //     .then(data => console.log(data))
-// // }
+// onclick="modalOpen('${details}'),'${image_url}' "
 
-// const loadNewsItem = ()=>
-// fetch(`https://openapi.programming-hero.com/api/news/category/0${category_id}`)
-//    .then(res => res.json())
-//    .then(data =>displayNewsItem(data))
-
-
-//     const displayNewsItem =  newses =>{
-//         console.log(newses)
-//         newses.forEach(news =>{
-//             console.log(news)
-//         })
-//     }
-//     // displayNewsItem()
-//     loadNewsItem()
-// // const newsContainer = document.getElementById('news-container')
-
-// // output.data.forEach( news =>{
-// // // newsContainer.textContent = ''
-// // // const div = document.createElement('div')
-// // // div.innerHTML= `
-{/* <div class="card card-side bg-base-100 shadow-xl">
-   <figure><img src="${image_url}" alt="Movie"></figure>
-   <div class="card-body">
-     <h2 class="card-title">${news.data[0].title}</h2>
-     <p>Click the button to watch on Jetflix app.</p>
-     <div class="card-actions justify-end">
-       <button class="btn btn-primary">Watch</button>
-     </div>
-   </div>
- </div>
- 
-
-// // console.log(news)
-// // })
-
-// // newsContainer.appendChild(div)
-  */}
